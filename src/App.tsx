@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
+import { Map } from './app/components/Map'
 import './App.css';
 import { Date } from './app/component/Date';
 import { PhotoGallery } from './app/components/PhotoGallery';
@@ -54,6 +55,7 @@ function App() {
         </span>
       </header>
       <Date/>
+      <Map/>
       <PhotoGallery/>
     </div>
   );
