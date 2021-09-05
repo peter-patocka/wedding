@@ -1,0 +1,43 @@
+.wedding-tables-container {
+    background: transparent url('../../assets/flowers_top_bg.jpg') 0 -100px repeat-x;
+    padding: 50px 0;
+}
+.wedding-tables {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+}
+.wedding-table {
+    margin: 0 0 20px 0;
+}
+.wedding-table ul {
+    margin: 0;
+    padding: 0;
+}
+.wedding-table ul li {
+    list-style: none;
+}
+
+@media(max-width: 1000px) {
+    .wedding-tables-container {
+        background-size: auto 35%;
+    }
+    .wedding-tables {
+        grid-template-columns: 33% 33% 33%;
+    }
+}
+@media(max-width: 800px) {
+    .wedding-tables-container {
+        background-size: auto 25%;
+    }
+    .wedding-tables {
+        grid-template-columns: 50% 50%;
+    }
+}
+@media(max-width: 500px) {
+    .wedding-tables-container {
+        background-size: auto 15%;
+    }
+    .wedding-tables {
+        grid-template-columns: 100%;
+    }
+}
