@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
 import './App.css';
+import { Date } from './app/component/Date';
 import { PhotoGallery } from './app/components/PhotoGallery';
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
           </a>
         </span>
       </header>
+      <Date/>
       <PhotoGallery/>
     </div>
   );
