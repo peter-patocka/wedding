@@ -1,6 +1,8 @@
 import React from 'react';
 import tablesJson from '../../data/guestsList.json';
 import './WeddingTables.css';
+import { BRIDE, GROOM } from '../../data/constants';
+import css from 'classnames';
 
 interface Tables {
     tables: Table[]
@@ -29,7 +31,7 @@ export const WeddingTables = () => {
                         <h4>({guests.length} people)</h4>
                         <ul>
                             {guests.map(guest => (
-                                <li>{guest}</li>
+                                <li className={css({ "bold": guest == GROOM || guest == BRIDE})}>{guest}</li>
                             ))}
                         </ul>
                     </div>
