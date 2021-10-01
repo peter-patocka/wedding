@@ -21,17 +21,17 @@ export const WeddingTables = () => {
     };
 
     return (
-        <div className="wedding-tables-container component">
+        <div className="wedding-tables-container component" id="guests-list">
             <h2>Guests list</h2>
             <h3>Total people: {getTotalGuests()}</h3>
             <div className="wedding-tables">
                 {tables.map((guests, index) => (
-                    <div className="wedding-table">
+                    <div className="wedding-table" key={index}>
                         <h3>Table {index + 1}</h3>
                         <h4>({guests.length} people)</h4>
                         <ul>
                             {guests.map(guest => (
-                                <li className={css({ "bold": guest == GROOM || guest == BRIDE})}>{guest}</li>
+                                <li key={guest} className={css({ "bold": guest == GROOM || guest == BRIDE})}>{guest}</li>
                             ))}
                         </ul>
                     </div>
