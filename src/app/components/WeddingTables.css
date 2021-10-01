@@ -6,6 +6,9 @@
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
 }
+.wedding-tables > div:first-child {
+    grid-row: 1 / 3;
+}
 .wedding-table {
     margin: 0 0 20px 0;
 }
@@ -39,5 +42,8 @@
     }
     .wedding-tables {
         grid-template-columns: 100%;
+    }
+    .wedding-tables > div:first-child {
+        grid-row: 1;
     }
 }

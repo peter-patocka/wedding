@@ -7,3 +7,13 @@
     height: 100%;
     border: 0;
 }
+@media (max-width:1200px) {
+    .map {
+        height: 300px;
+    }
+}
+@media (max-width:800px) {
+    .map {
+        height: 150px;
+    }
+}
