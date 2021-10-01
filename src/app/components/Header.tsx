@@ -1,15 +1,16 @@
 import React from 'react';
 import './Header.css';
+import { BRIDE, DATE, GROOM } from '../../data/constants';
 
 export const Header = () => {
     return (
         <div className="header component">
             <div className="info-block">
                 <div className="names">
-                    <span>Lucia Lászlóová</span> + <span>Peter Patočka</span>
+                    <span>{BRIDE}</span> + <span>{GROOM}</span>
                 </div>
-                <div className="date">📅 12. 06. 2022</div>
-                <div className="time">⌚ 11:00</div>
+                <div className="date">📅 {DATE.toLocaleDateString()}</div>
+                <div className="time">⌚ {DATE.toLocaleTimeString()}</div>
                 <div className="place">
                     <a href="https://www.lod.sk/sk/eventova-lod-harmonia/" target="_blank">
                          🚢 <span className="text">Loď Harmónia</span>
