@@ -1,6 +1,7 @@
 import React from 'react';
 import './Header.css';
 import { BRIDE, DATE, GROOM } from '../../data/constants';
+import * as Icons from "@material-ui/icons";
 
 export const Header = () => {
     return (
@@ -9,11 +10,11 @@ export const Header = () => {
                 <div className="names">
                     <span>{BRIDE}</span> + <span>{GROOM}</span>
                 </div>
-                <div className="date">📅 {DATE.toLocaleDateString()}</div>
-                <div className="time">⌚ {DATE.toLocaleTimeString()}</div>
+                <div className="date"><Icons.CalendarToday /> {DATE.toLocaleDateString()}</div>
+                <div className="time"><Icons.Watch /> {DATE.toLocaleTimeString()}</div>
                 <div className="place">
                     <a href="https://www.lod.sk/sk/eventova-lod-harmonia/" target="_blank">
-                         🚢 <span className="text">Loď Harmónia</span>
+                        <Icons.DirectionsBoat /> <span className="text">Loď Harmónia</span>
                     </a> na rieke Dunaj
                 </div>
                 <section>
