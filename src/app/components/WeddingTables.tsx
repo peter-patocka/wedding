@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import tablesJson from '../../data/guestsList.json';
 import './WeddingTables.css';
 import { BRIDE, GROOM } from '../../data/constants';
@@ -10,15 +10,40 @@ interface Tables {
 type Table = Guest[];
 type Guest = string;
 
+interface WeddingTableResponse {
+    id: string;
+    name: string;
+    table_id: string;
+    place_id: string;
+}
+
 export const WeddingTables = () => {
-    const tablesFile: Tables = JSON.parse(JSON.stringify(tablesJson));
-    const tables: Table[] = tablesFile.tables;
+    let tables: Table[] = getDataFromJson();
+
+    const [response, loading, hasError] = useFetch<WeddingTableResponse[]>("http://www.piixon.sk/api/wedding-tables");
 
     const getTotalGuests = (): number => {
+        if(tables.length === 0) {
+            return 0;
+        }
         return tables
             .map(guests => guests.length)
             .reduce((prev, current) => prev + current);
     };
+
+    function transformWeddingTableResponse(response: WeddingTableResponse[]): Table[] {
+        let map = new Map<string,Table>();
+        response.forEach(value => {
+           const arr: Table = map.get(value.table_id) || [];
+           arr.push(value.name);
+           map.set(value.table_id, arr);
+        });
+        return Array.from(map, ([_index, table]) => table);
+    }
+
+    if(!hasError && !loading && response) {
+        tables = transformWeddingTableResponse(response);
+    }
 
     return (
         <div className="wedding-tables-container component" id="guests-list">
@@ -40,3 +65,39 @@ export const WeddingTables = () => {
         </div>
     );
 };
+
+function getDataFromJson(): Table[] {
+    const tablesFile: Tables = JSON.parse(JSON.stringify(tablesJson));
+    return tablesFile.tables;
+}
+
+function useFetch<T>(url: string, init?: RequestInit): [T | undefined, boolean, boolean] {
+
+    const [response, setResponse] = useState<T>();
+    const [loading, setLoading] = useState(false);
+    const [hasError, setHasError] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            },
+            ...init,
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((json) => {
+                setResponse(json.result);
+                setLoading(false);
+            })
+            .catch(() => {
+                setHasError(true);
+                setLoading(false);
+                setResponse(undefined);
+            })
+    }, [ url ]);
+    return [ response, loading, hasError ]
+}
