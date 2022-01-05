@@ -20,7 +20,7 @@ interface WeddingTableResponse {
 export const WeddingTables = () => {
     let tables: Table[] = getDataFromJson();
 
-    const [response, loading, hasError] = useFetch<WeddingTableResponse[]>("http://www.piixon.sk/api/wedding-tables");
+    const [response, loading, hasError] = useFetch<WeddingTableResponse[]>("/api/wedding-tables");
 
     const getTotalGuests = (): number => {
         if(tables.length === 0) {
