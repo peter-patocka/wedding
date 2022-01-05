@@ -6,7 +6,7 @@ CREATE TABLE `learnhunter` (
   `name` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `learnhunter` (`id`, `name`, `email`, `created_at`) VALUES
 (1, 'sobuz', 'sobuz@gmail.com', '2019-01-30 08:00:00'),
