@@ -1,32 +1,59 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Header.css';
 import { BRIDE, DATE, GROOM } from '../../data/constants';
 import * as Icons from "@material-ui/icons";
 
 export const Header = () => {
+
+    useEffect(() => {
+        // @ts-ignore
+        $('.simply-countdown-one').simplyCountdown({
+            year: DATE.getFullYear(),
+            month: DATE.getMonth() + 1,
+            day: DATE.getDate()
+        });
+    }, []);
+
     return (
         <div className="header component">
-            <div className="info-block">
-                <div className="names">
-                    <span>{BRIDE}</span> + <span>{GROOM}</span>
+            <header id="fh5co-header" className="fh5co-cover" role="banner"
+                    data-stellar-background-ratio="0.5">
+                <div className="overlay"/>
+                <div className="container container-full">
+                    <div className="row">
+                        <div className="col-md-8 col-md-offset-2 text-center">
+                            <div className="display-t">
+                                <div className="display-tc animate-box" data-animate-effect="fadeIn">
+                                    <h1>{BRIDE} &amp; {GROOM}</h1>
+                                    <h2>
+                                        <div className="header-date-time">
+                                            <Icons.CalendarToday /> {DATE.toLocaleDateString()}
+                                            <Icons.Watch /> {DATE.toLocaleTimeString()}
+                                        </div>
+                                        <div className="header-place">
+                                            <a href="https://www.lod.sk/sk/eventova-lod-harmonia/" target="_blank">
+                                                <Icons.DirectionsBoat /> <span className="text">Loď Harmónia</span>
+                                            </a> na rieke Dunaj
+                                        </div>
+                                    </h2>
+                                    {DATE.getMilliseconds() < new Date().getMilliseconds() && (
+                                        <div className="simply-countdown simply-countdown-one"/>
+                                    )}
+                                    <p className="save-date">
+                                        <a href="https://calendar.google.com/event?action=TEMPLATE&amp;tmeid=N3UwZzc0YThiczkya3NzOTNkN2g4dTkwbWUgMjB2dGxncm9oODMydG9kZDgzMzZzMDFiMTBAZw&amp;tmsrc=20vtlgroh832todd8336s01b10%40group.calendar.google.com"
+                                           className="btn btn-default btn-sm"
+                                           target="_blank"
+                                        >
+                                            Save the date<br/>
+                                            <img src="https://www.google.com/calendar/images/ext/gc_button1_en.gif" alt="Google Calendar" />
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className="date"><Icons.CalendarToday /> {DATE.toLocaleDateString()}</div>
-                <div className="time"><Icons.Watch /> {DATE.toLocaleTimeString()}</div>
-                <div className="place">
-                    <a href="https://www.lod.sk/sk/eventova-lod-harmonia/" target="_blank">
-                        <Icons.DirectionsBoat /> <span className="text">Loď Harmónia</span>
-                    </a> na rieke Dunaj
-                </div>
-                <section>
-                <div className="icons">
-                    <a target="_blank"
-                       rel="noreferrer"
-                       href="https://calendar.google.com/event?action=TEMPLATE&amp;tmeid=N3UwZzc0YThiczkya3NzOTNkN2g4dTkwbWUgMjB2dGxncm9oODMydG9kZDgzMzZzMDFiMTBAZw&amp;tmsrc=20vtlgroh832todd8336s01b10%40group.calendar.google.com">
-                        <img src="https://www.google.com/calendar/images/ext/gc_button1_en.gif" alt="Google Calendar" />
-                    </a>
-                </div>
-                </section>
-            </div>
+            </header>
         </div>
     );
 };
