@@ -1,5 +1,7 @@
 <?php
 
+include "configuration.php";
+
 header('Access-Control-Allow-Origin: *');
  
 // include "authenticate.php"; // CORS Credential is not supported if the CORS header 'Access-Control-Allow-Origin' is '*'
