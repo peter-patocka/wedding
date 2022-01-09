@@ -3,6 +3,8 @@ import {render} from '@testing-library/react';
 import App from './App';
 import { BRIDE, GROOM } from './data/constants';
 
+jest.mock('./app/components/Header', () => ({ Header: () => 'mocked header' }));
+
 describe('App', () => {
     test('should render with names', () => {
         const { getAllByText } = render(<App />);
