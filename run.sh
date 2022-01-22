@@ -15,10 +15,10 @@ case $1 in
   'build')
     yarn build
     ;;
-  'up')
+  'backend_up')
     docker-compose -f "${COMPOSE_FILE}" up -d
     ;;
-  'down')
+  'backend_down')
     docker-compose -f "${COMPOSE_FILE}" down
     ;;
   *)

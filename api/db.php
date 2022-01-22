@@ -1,10 +1,13 @@
 <?php
 
-$server = getenv("MYSQL_SERVER") ?? "localhost";
-$username = getenv("MYSQL_USER") ?? "username";
-$password = getenv("MYSQL_PASSWORD") ?? "password";
-$dbname = getenv("MYSQL_DATABASE") ?? "dbname";
+require_once ('MysqliDb.php');
 
-$conn = new mysqli($server, $username, $password, $dbname);
+$server = "mysql";
+$username = "username";
+$password = "password";
+$dbname = "dbname";
+
+$conn = mysqli_connect($server, $username, $password, $dbname);
+$conn->query("SET NAMES 'utf8'");
 
 ?>
