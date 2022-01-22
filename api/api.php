@@ -6,7 +6,7 @@ header('Access-Control-Allow-Origin: *');
  
 // include "authenticate.php"; // CORS Credential is not supported if the CORS header 'Access-Control-Allow-Origin' is '*'
 
-header('content-type: application/json');
+header("Content-type: application/json; charset=utf-8");
 
 $fn = $_GET['fn'];
 
