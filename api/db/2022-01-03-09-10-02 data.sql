@@ -69,4 +69,8 @@ INSERT INTO `wedding-table` (`name`, `table_id`, `place_id`) VALUES
 ('Asher Struhár', '6', '6'),
 ('Simona Ďurejová', '6', '7'),
 ('Vlado Ďurej', '6', '8'),
-('Semi Ďurej', '6', '9');
+('Semi Ďurej', '6', '9'),
+('Peter Bodnár', '1', '28'),
+('Zuzana Synaková', '7', '1'),
+('Iveta Sopková', '7', '2'),
+('Čimo', '7', '3');

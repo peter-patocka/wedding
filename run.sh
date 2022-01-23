@@ -21,6 +21,9 @@ case $1 in
   'backend_down')
     docker-compose -f "${COMPOSE_FILE}" down
     ;;
+  'backend_clean_cache')
+    docker volume rm $(docker volume ls -q)
+    ;;
   *)
         echo "Invalid command"
         ;;

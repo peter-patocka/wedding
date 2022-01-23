@@ -21,7 +21,7 @@ function getmethod(){
        $rows = array();
        $i = 0;
        while ($obj = mysqli_fetch_object($result)) {
-          $rows["result"][$i++] = $obj;
+          $rows[$i++] = $obj;
        }
 
        echo json_encode($rows);
