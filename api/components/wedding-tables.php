@@ -15,7 +15,7 @@
 //data read part are here
 function getmethod(){
   include "db.php";
-  $sql = "SELECT * FROM `wedding-table`";
+  $sql = "SELECT * FROM `wedding-table` WHERE deleted = 0";
 
   if ($result = mysqli_query($conn, $sql)) {
        $rows = array();
