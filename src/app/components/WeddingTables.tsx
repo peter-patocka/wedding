@@ -3,6 +3,7 @@ import tablesJson from '../../data/guestsList.json';
 import './WeddingTables.css';
 import { BRIDE, GROOM } from '../../data/constants';
 import css from 'classnames';
+import { WeddingTable } from '../../types/entity/WeddingTable';
 
 interface Tables {
     tables: Table[]
@@ -10,17 +11,10 @@ interface Tables {
 type Table = Guest[];
 type Guest = string;
 
-interface WeddingTableResponse {
-    id: string;
-    name: string;
-    table_id: string;
-    place_id: string;
-}
-
 export const WeddingTables = () => {
     let tables: Table[] = getDataFromJson();
 
-    const [response, loading, hasError] = useFetch<WeddingTableResponse[]>("/api/wedding-tables");
+    const [response, loading, hasError] = useFetch<WeddingTable[]>("/api/wedding-tables");
 
     const getTotalGuests = (): number => {
         if(tables.length === 0) {
@@ -31,7 +25,7 @@ export const WeddingTables = () => {
             .reduce((prev, current) => prev + current);
     };
 
-    function transformWeddingTableResponse(response: WeddingTableResponse[]): Table[] {
+    function transformWeddingTableResponse(response: WeddingTable[]): Table[] {
         let map = new Map<string,Table>();
         response.forEach(value => {
            const arr: Table = map.get(value.table_id) || [];
