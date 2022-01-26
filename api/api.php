@@ -1,11 +1,9 @@
 <?php
 
-include "configuration.php";
+require_once "include/configuration.php";
+require_once "include/db.php";
 
 header('Access-Control-Allow-Origin: *');
-
-// include "authenticate.php"; // CORS Credential is not supported if the CORS header 'Access-Control-Allow-Origin' is '*'
-
 header("Content-type: application/json; charset=utf-8");
 
 $fn = $_GET['fn'];
