@@ -1,3 +1,4 @@
 RewriteEngine On
 RewriteBase /wedding/api/
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*) api.php?fn=$1 [L,NC,QSA]
