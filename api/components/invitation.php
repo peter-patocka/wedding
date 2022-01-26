@@ -20,19 +20,18 @@ function get_invite_code() {
 
 //data read part are here
 function postmethod(){
-    include "db.php";
     $code = mysqli_real_escape_string($conn, get_invite_code());
     $sql = "UPDATE `wedding-table` a ".
            "INNER JOIN `wedding-table` b ON a.group_id =b.group_id ".
            "SET a.invitation_accepted = 1 ".
-           "WHERE a.invitation_code = '".$code."' OR b.invitation_code = '".$code."'";
+           "WHERE UPPER(a.invitation_code) = UPPER('".$code."') OR UPPER(b.invitation_code) = UPPER('".$code."')";
 
     mysqli_query($conn, $sql);
     $rows_affected = mysqli_affected_rows($conn);
 
     $sql = "SELECT distinct a.* FROM `wedding-table` a ".
                "INNER JOIN `wedding-table` b ON a.group_id = b.group_id ".
-               "WHERE a.invitation_code = '".$code."' OR b.invitation_code = '".$code."'";
+               "WHERE UPPER(a.invitation_code) = UPPER('".$code."') OR UPPER(b.invitation_code) = UPPER('".$code."')";
 
     if ($result = mysqli_query($conn, $sql)) {
        $rows = array();
@@ -40,7 +39,7 @@ function postmethod(){
        $num_rows = mysqli_num_rows($result);
 
        if($num_rows == 0) {
-           echo '{"result": "error", "num_rows_affected": "'.$rows_affected.'"}';
+           echo '{"result": "error", "status": "invalid data" ,"num_rows_affected": "'.$rows_affected.'"}';
            return;
        }
 
@@ -52,7 +51,7 @@ function postmethod(){
 
        echo '{"result": "updated", "num_rows_affected": "'.$rows_affected.'", "rows_affected": '.json_encode($rows).'}';
     }  else {
-       echo '{"result": "error", "num_rows_affected": "'.$rows_affected.'"}';
+       echo '{"result": "error", "status": "mysql query error" ,"num_rows_affected": "'.$rows_affected.'"}';
     }
 }
 ?>

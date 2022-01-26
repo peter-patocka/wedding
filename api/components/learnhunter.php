@@ -26,7 +26,6 @@
 
 //data read part are here
 function getmethod(){
-  include "db.php";
   $sql = "SELECT * FROM learnhunter";
   $result = mysqli_query($conn, $sql);
 
@@ -44,7 +43,6 @@ function getmethod(){
 }
 //data insert part are here
 function postmethod($data){
-   include "db.php";
    $name=$data["name"];
    $email=$data["email"];
 
@@ -63,7 +61,6 @@ function postmethod($data){
 
 //data edit part are here
 function putmethod($data){
-   include "db.php";
    $id=$data["id"];
    $name=$data["name"];
    $email=$data["email"];
@@ -82,7 +79,6 @@ function putmethod($data){
 }
 //delete method are here,,,,,,,,,,,,,,
 function deletemethod($data){
-   include "db.php";
 
    $id=$data["id"];
    
