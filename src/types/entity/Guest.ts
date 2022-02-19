@@ -1,4 +1,4 @@
-export interface WeddingTable {
+export interface Guest {
     id: string;
     name: string;
     table_id: string;
