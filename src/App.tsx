@@ -1,23 +1,19 @@
 import React from 'react';
-import { Map } from './app/components/Map'
+import { GuestForm } from "./app/components/GuestForm";
+import { Route, Routes } from "react-router-dom";
+
 import './App.css';
-import { Header } from './app/components/Header';
-import { PhotoGallery } from './app/components/PhotoGallery';
-import harmonia from './assets/harmonia.jpg';
-import { WeddingTables } from './app/components/WeddingTables';
-import { InvitationForm } from './app/components/InvitationForm';
+import { HomePage } from "./pages/HomePage";
 
 function App() {
-  return (
-    <div className="App">
-        <Header/>
-        <InvitationForm />
-        <img src={harmonia} alt="Eventová loď Harmónia" className="full-size" />
-        <Map/>
-        <WeddingTables />
-        <PhotoGallery />
-    </div>
-  );
+    return (
+        <div className="App">
+            <Routes>
+                <Route path="/accept-invitation" element={<GuestForm/>} />
+                <Route path="*" element={<HomePage />} />
+            </Routes>
+        </div>
+    );
 }
 
 export default App;

@@ -1,42 +1,14 @@
 import React from 'react';
 import { Field, Form, Formik } from 'formik';
 import './InvitationForm.css';
-import { WeddingTable } from '../../types/entity/WeddingTable';
+import { Guest } from '../../types/entity/Guest';
+import { Api } from "../api";
 
-interface InvitationResult {
-    result: string;
-    num_rows_affected: number;
-    rows_affected?: WeddingTable[]
+interface InvitationFormProps {
+    onUpdate?: (rows: Guest[]) => void;
 }
 
-export const InvitationForm = () => {
-
-    const onUpdate = (rows: WeddingTable[]) => {
-        alert('Thanks for your attendance!')
-    };
-
-    const onSubmit = (code: string) => {
-        fetch("/api/invitation/"+code, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json'
-            },
-        })
-            .then((response) => {
-                return response.json();
-            })
-            .then((json: InvitationResult) => {
-                if(json.result == 'updated') {
-                    onUpdate(json.rows_affected || []);
-                } else {
-                    alert('Invitation code is invalid.')
-                }
-            })
-            .catch(() => {
-                alert('Unable to accept invitation. Contact administrator.');
-            })
-    };
-
+export const InvitationForm = (props: InvitationFormProps) => {
     return (
         <>
             <div id="fh5co-started" className="fh5co-bg">
@@ -53,7 +25,7 @@ export const InvitationForm = () => {
                             <Formik
                                 initialValues={{ code: "" }}
                                 onSubmit={async (values) => {
-                                    onSubmit(values.code);
+                                    Api.acceptInvitation(values.code, props.onUpdate);
                                 }}
                             >
                                 <Form className="form-inline">
