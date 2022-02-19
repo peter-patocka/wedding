@@ -1,6 +1,7 @@
 <?php
 
 require_once "include/configuration.php";
+require_once "include/functions.php";
 require_once "include/db.php";
 
 header('Access-Control-Allow-Origin: *');
