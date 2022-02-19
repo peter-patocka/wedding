@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import tablesJson from '../../data/guestsList.json';
 import './WeddingTables.css';
-import { BRIDE, GROOM } from '../../data/constants';
+import {BRIDE, ENABLE_STATIC_GUESTS_LIST, GROOM} from '../../data/constants';
 import css from 'classnames';
-import { WeddingTable } from '../../types/entity/WeddingTable';
+import { Guest } from '../../types/entity/Guest';
 
 interface Tables {
     tables: Table[]
 }
-type Table = Guest[];
-type Guest = string;
+type Table = TableGuest[];
+type TableGuest = string;
 
 export const WeddingTables = () => {
-    let tables: Table[] = getDataFromJson();
+    const queryParams = new URLSearchParams(window.location.search);
+    if(queryParams.get("showGuestList") != '1') {
+        return (
+          <></>
+        );
+    }
 
-    const [response, loading, hasError] = useFetch<WeddingTable[]>("/api/wedding-tables");
+    let tables: Table[] = ENABLE_STATIC_GUESTS_LIST ? getDataFromJson() : [];
+
+    const [response, loading, hasError] = useFetch<Guest[]>("/api/wedding-tables");
 
     const getTotalGuests = (): number => {
         if(tables.length === 0) {
@@ -25,12 +32,12 @@ export const WeddingTables = () => {
             .reduce((prev, current) => prev + current);
     };
 
-    function transformWeddingTableResponse(response: WeddingTable[]): Table[] {
+    function transformWeddingTableResponse(response: Guest[]): Table[] {
         let map = new Map<string,Table>();
         response.forEach(value => {
-           const arr: Table = map.get(value.table_id) || [];
-           arr.push(value.name);
-           map.set(value.table_id, arr);
+            const arr: Table = map.get(value.table_id) || [];
+            arr.push(value.name);
+            map.set(value.table_id, arr);
         });
         return Array.from(map, ([_index, table]) => table);
     }
@@ -84,7 +91,7 @@ function useFetch<T>(url: string, init?: RequestInit): [T | undefined, boolean, 
                 return response.json();
             })
             .then((json) => {
-                setResponse(json.result);
+                setResponse(json);
                 setLoading(false);
             })
             .catch(() => {
