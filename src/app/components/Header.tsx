@@ -6,12 +6,14 @@ import * as Icons from "@material-ui/icons";
 export const Header = () => {
 
     useEffect(() => {
-        // @ts-ignore
-        $('.simply-countdown-one').simplyCountdown({
-            year: DATE.getFullYear(),
-            month: DATE.getMonth() + 1,
-            day: DATE.getDate()
-        });
+        if(DATE.getTime() > (new Date()).getTime()) {
+            // @ts-ignore
+            $('.simply-countdown-one').simplyCountdown({
+                year: DATE.getFullYear(),
+                month: DATE.getMonth() + 1,
+                day: DATE.getDate()
+            });
+        }
     }, []);
 
     return (
@@ -27,8 +29,12 @@ export const Header = () => {
                                     <h1>{BRIDE} &amp; {GROOM}</h1>
                                     <h2>
                                         <div className="header-date-time">
-                                            <Icons.CalendarToday /> {DATE.toLocaleDateString()}
-                                            <Icons.Watch /> {DATE.toLocaleTimeString()}
+                                            <span>
+                                                <Icons.CalendarToday /> {DATE.toLocaleDateString()}
+                                            </span>
+                                            <span>
+                                                <Icons.Watch /> {DATE.toLocaleTimeString()}
+                                            </span>
                                         </div>
                                         <div className="header-place">
                                             <a href="https://www.lod.sk/sk/eventova-lod-harmonia/"
@@ -42,16 +48,18 @@ export const Header = () => {
                                     {DATE.getMilliseconds() < new Date().getMilliseconds() && (
                                         <div className="simply-countdown simply-countdown-one"/>
                                     )}
-                                    <p className="save-date">
-                                        <a href="https://calendar.google.com/event?action=TEMPLATE&amp;tmeid=N3UwZzc0YThiczkya3NzOTNkN2g4dTkwbWUgMjB2dGxncm9oODMydG9kZDgzMzZzMDFiMTBAZw&amp;tmsrc=20vtlgroh832todd8336s01b10%40group.calendar.google.com"
-                                           className="btn btn-default btn-sm"
-                                           rel="noreferrer"
-                                           target="_blank"
-                                        >
-                                            Save the date<br/>
-                                            <img src="https://www.google.com/calendar/images/ext/gc_button1_en.gif" alt="Google Calendar" />
-                                        </a>
-                                    </p>
+                                    {/**
+                                        <p className="save-date">
+                                            <a href="https://calendar.google.com/event?action=TEMPLATE&amp;tmeid=N3UwZzc0YThiczkya3NzOTNkN2g4dTkwbWUgMjB2dGxncm9oODMydG9kZDgzMzZzMDFiMTBAZw&amp;tmsrc=20vtlgroh832todd8336s01b10%40group.calendar.google.com"
+                                               className="btn btn-default btn-sm"
+                                               rel="noreferrer"
+                                               target="_blank"
+                                            >
+                                                Save the date<br/>
+                                                <img src="https://www.google.com/calendar/images/ext/gc_button1_en.gif" alt="Google Calendar" />
+                                            </a>
+                                        </p>
+                                    )**/}
                                 </div>
                             </div>
                         </div>

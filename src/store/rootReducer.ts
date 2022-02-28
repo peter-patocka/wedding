@@ -8,7 +8,7 @@ const createRootReducer = (
   history: BrowserHistory,
 ): Reducer<ApplicationState> =>
   combineReducers({
-    guests: guests,
+    guestState: guests,
     router: connectRouter(history),
   });
 

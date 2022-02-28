@@ -1,7 +1,5 @@
-;(function () {
+export default function () {
 	
-	'use strict';
-
 	var mobileMenuOutsideClick = function() {
 
 		$(document).click(function (e) {
@@ -213,20 +211,16 @@
 		$(window).stellar();
 	};
 
-	
-	$(function(){
-		mobileMenuOutsideClick();
-		parallax();
-		offcanvasMenu();
-		burgerMenu();
-		contentWayPoint();
-		dropdown();
-		testimonialCarousel();
-		goToTop();
-		loaderPage();
-		counter();
-		counterWayPoint();
-	});
+	mobileMenuOutsideClick();
+	parallax();
+	offcanvasMenu();
+	burgerMenu();
+	contentWayPoint();
+	dropdown();
+	testimonialCarousel();
+	goToTop();
+	loaderPage();
+	counter();
+	counterWayPoint();
 
-
-}());
+}
