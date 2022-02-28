@@ -16,7 +16,7 @@ export const reducer: Reducer<GuestsState, GuestsActionTypes> = (
         data: toGuestsPayload(action.payload),
       };
     case FETCH_ERROR:
-      return { ...state, isFetching: true, data: [] };
+      return { ...state, isFetching: true, data: [], error: action?.payload?.message };
     default:
       return state;
   }
