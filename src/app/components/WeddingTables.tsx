@@ -21,7 +21,7 @@ export const WeddingTables = () => {
 
     let tables: Table[] = ENABLE_STATIC_GUESTS_LIST ? getDataFromJson() : [];
 
-    const [response, loading, hasError] = useFetch<Guest[]>("/api/wedding-tables");
+    const [response, loading, hasError] = useFetch<Guest[] | undefined>("/api/wedding-tables");
 
     const getTotalGuests = (): number => {
         if(tables.length === 0) {
@@ -33,7 +33,7 @@ export const WeddingTables = () => {
     };
 
     function transformWeddingTableResponse(response: Guest[]): Table[] {
-        let map = new Map<string,Table>();
+        const map = new Map<string,Table>();
         response.forEach(value => {
             const arr: Table = map.get(value.table_id) || [];
             arr.push(value.name);

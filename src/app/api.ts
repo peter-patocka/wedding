@@ -2,27 +2,25 @@ import { Guest } from "../types/entity/Guest";
 
 export class Api {
 
-    static acceptInvitation(code: string, onSuccess: (rows: Guest[]) => void = (() => {})) {
-        fetch("/api/invitation/"+code, {
+    static async acceptInvitation(code: string, onSuccess: (rows: Guest[]) => void = (() => undefined)): Promise<Guest[]> {
+        return await fetch("/api/invitation/"+code, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json'
             },
         })
-            .then((response) => {
-                return response.json();
-            })
-            .then((json: InvitationResult) => {
-                if(json.result == 'success') {
-                    onSuccess(json.rows_affected ?? []);
-                } else {
-                    alert('Invitation code is invalid.')
-                }
-            })
-            .catch(() => {
-                alert('Unable to accept invitation. Contact administrator.');
-            })
-    };
+        .then((response) => {
+            return response.json();
+        })
+        .then((json: InvitationResult) => {
+            if(json.result == 'success') {
+                const guests = json.rows_affected ?? [];
+                onSuccess(guests);
+                return guests;
+            }
+            return Promise.reject();
+        });
+    }
 }
 
 interface InvitationResult {

@@ -31,7 +31,10 @@ export const Header = () => {
                                             <Icons.Watch /> {DATE.toLocaleTimeString()}
                                         </div>
                                         <div className="header-place">
-                                            <a href="https://www.lod.sk/sk/eventova-lod-harmonia/" target="_blank">
+                                            <a href="https://www.lod.sk/sk/eventova-lod-harmonia/"
+                                               target="_blank"
+                                               rel="noreferrer"
+                                            >
                                                 <Icons.DirectionsBoat /> <span className="text">Loď Harmónia</span>
                                             </a> na rieke Dunaj
                                         </div>
@@ -42,6 +45,7 @@ export const Header = () => {
                                     <p className="save-date">
                                         <a href="https://calendar.google.com/event?action=TEMPLATE&amp;tmeid=N3UwZzc0YThiczkya3NzOTNkN2g4dTkwbWUgMjB2dGxncm9oODMydG9kZDgzMzZzMDFiMTBAZw&amp;tmsrc=20vtlgroh832todd8336s01b10%40group.calendar.google.com"
                                            className="btn btn-default btn-sm"
+                                           rel="noreferrer"
                                            target="_blank"
                                         >
                                             Save the date<br/>
