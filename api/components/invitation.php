@@ -5,11 +5,8 @@ $code = parseInput(get_invite_code());
 
 switch ( $request) {
    	case 'POST':
-   		postAcceptInvitationJson($code);
-   	break;
-
     case 'GET':
-        getGuestsJson($code);
+   		postAcceptInvitationJson($code);
     break;
 
    	default:
@@ -26,6 +23,7 @@ function get_invite_code() {
 function postAcceptInvitationJson($code){
     $group_id = getGroupId($code);
     if($group_id < 0) {
+        header("HTTP/1.0 404 Not Found");
         echo '{"result": "error", "status": "code not found"}';
         return;
     }

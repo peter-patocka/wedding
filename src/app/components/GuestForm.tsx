@@ -1,29 +1,36 @@
-import React from 'react';
-import './InvitationForm.css';
+import React, { useEffect, useState } from 'react';
 import { Guest } from '../../types/entity/Guest';
-import { Api } from "../api";
+import { fetchGuests } from "../../store/guests/epics";
+import { useDispatch, useSelector } from 'react-redux'
+import { ApplicationState } from "../../types/applicationState";
 
 interface  GuestFormProps {
     guests?: Guest[]
 }
 
 export const GuestForm = (props: GuestFormProps) => {
-    let guests: Guest[] = props.guests || [];
 
-    const guestsLoaded = (rows: Guest[]) => {
-        guests = rows;
-    };
+    const [isSending, setIsSending] = useState(true);
+    const dispatch = useDispatch();
+    const guests = useSelector((state: ApplicationState) => state.guests);
 
-    const queryParams = new URLSearchParams(window.location.search);
-    const code = queryParams.get("code");
-    if(code) {
-        Api.acceptInvitation(code, guestsLoaded);
-    }
+    useEffect(() => {
+        if (!isSending) {
+            return;
+        }
+
+        const queryParams = new URLSearchParams(window.location.search);
+        const code = queryParams.get("code");
+        if(code) {
+            dispatch(fetchGuests(code));
+        }
+
+        setIsSending(false);
+    }, [isSending]);
 
     return (
         <>
             <header id="fh5co-header" className="fh5co-cover fh5co-cover-sm" role="banner">
-                // style="background-image:url(images/img_bg_1.jpg);"
                 <div className="overlay"></div>
                 <div className="fh5co-container">
                     <div className="row">
@@ -32,6 +39,7 @@ export const GuestForm = (props: GuestFormProps) => {
                                 <div className="display-tc animate-box" data-animate-effect="fadeIn">
                                     <h1>Contact Us</h1>
                                     <h2>Free HTML5 templates Made by <a href="http://freehtml5.co"
+                                                                        rel="noreferrer"
                                                                         target="_blank">FreeHTML5.co</a></h2>
                                 </div>
                             </div>
@@ -46,6 +54,15 @@ export const GuestForm = (props: GuestFormProps) => {
                         <div className="col-md-12 animate-box">
                             <h3>Get In Touch</h3>
                             <form action="#">
+                                {!guests.isFetching && !guests.error && guests.data.map((guest, index) => (
+                                    <div className="row form-group" key={index}>
+                                        <div className="col-md-12">
+                                            <label htmlFor="fname">First Name</label>
+                                            <input type="text" id="fname" className="form-control"
+                                                   placeholder={guest.name} />
+                                        </div>
+                                    </div>
+                                ))}
                                 <div className="row form-group">
                                     <div className="col-md-6">
                                         <label htmlFor="fname">First Name</label>
