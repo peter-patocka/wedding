@@ -3,12 +3,25 @@ import { Field, Form, Formik } from 'formik';
 import './InvitationForm.css';
 import { Guest } from '../../types/entity/Guest';
 import { Api } from "../api";
+import { onFetchGuestsSuccess } from "../../store/guests/epics";
+import { useNavigate } from "react-router-dom";
 
 interface InvitationFormProps {
     onUpdate?: (rows: Guest[]) => void;
 }
 
 export const InvitationForm = (props: InvitationFormProps) => {
+
+    const navigate = useNavigate();
+
+    const onUpdate = (rows: Guest[]) => {
+        alert('Thanks for your attendance!');
+        if(rows.length > 0) {
+            onFetchGuestsSuccess(rows);
+            navigate("/invitation/"+ rows[0].invitation_code);
+        }
+    };
+
     return (
         <>
             <div id="fh5co-started" className="fh5co-bg">
@@ -25,7 +38,10 @@ export const InvitationForm = (props: InvitationFormProps) => {
                             <Formik
                                 initialValues={{ code: "" }}
                                 onSubmit={async (values) => {
-                                    Api.acceptInvitation(values.code, props.onUpdate)
+                                    Api.acceptInvitation(values.code)
+                                        .then(guests => {
+                                            onUpdate(guests);
+                                        })
                                         .catch(() => {
                                             alert('Invitation code not found.');
                                         });
