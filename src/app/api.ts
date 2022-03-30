@@ -23,7 +23,7 @@ export class Api {
     }
     static async updateGuests(code: string, guests: Guest[], onSuccess: (rows: Guest[]) => void = (() => undefined)): Promise<Guest[]> {
         return await fetch("/api/invitation/"+code, {
-            method: 'POST',
+            method: 'PUT',
             body: JSON.stringify(guests),
             headers: {
                 'Accept': 'application/json',
