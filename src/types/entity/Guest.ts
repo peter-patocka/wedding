@@ -7,4 +7,5 @@ export interface Guest {
     invitation_accepted: number;
     group_id: number;
     deleted: number;
+    message: string;
 }

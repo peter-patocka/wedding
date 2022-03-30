@@ -17,7 +17,7 @@ switch ( $request) {
 function get_invite_code() {
     $parts = explode("/", $_GET['fn']);
     $folders = $parts > 0 ? array_slice($parts, 0) : [];
-    return isset($folders[1]) ? $folders[1] : '';// get code from  "invitation/{code}"
+    return isset($folders[1]) ? $folders[1] : '';// get code from  "inv/{code}"
 }
 
 function postAcceptInvitationJson($code){
@@ -57,8 +57,8 @@ function updateGroupInvitation($group_id) {
     global $conn;
 
     $sql = "UPDATE `wedding-table` ".
-        "SET invitation_accepted = 1 ".
-        "WHERE group_id = ".$group_id;
+        "SET invitation_accepted = 1, visited = 1 ".
+        "WHERE visited = 0 AND group_id = ".$group_id;
 
     mysqli_query($conn, $sql);
     return mysqli_affected_rows($conn);
