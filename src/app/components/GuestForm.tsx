@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { Guest } from '../../types/entity/Guest';
 import { fetchGuests } from "../../store/guests/epics";
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,16 +36,28 @@ export const GuestForm = () => {
         }
     }, [guestState, isSending]);
 
-    const onSubmit = () => {
-        console.log("SUBMIT!");
-        Api.updateGuests("testCode", guests)
-            .then((result) => {
-                alert("Updated");
-                setGuests(result);
-            })
-            .catch(() => {
-                alert("Error");
-            });
+    const updateGuest = (guest: Guest) => {
+        const index = guests.findIndex(item => item.id === guest.id);
+        if(index >= 0 && index < guests.length) {
+            guests[index] = guest;
+            setGuests(guests);
+        }
+    };
+
+    const onSubmit = (event: FormEvent) => {
+        event.preventDefault();
+        if(guests.length > 0) {
+            const code = guests[0].invitation_code;
+            Api.updateGuests(code, guests)
+                .then((result) => {
+                    alert("Updated");
+                    setGuests(result);
+                })
+                .catch(() => {
+                    alert("Error");
+                });
+        }
+
     };
 
     return (
@@ -75,16 +87,16 @@ export const GuestForm = () => {
                                         <div key={index}>
                                             <div className="row form-group">
                                                 <div className="col-md-12">
-                                                    <label>
+                                                    <label className="cursor">
                                                         <span className="mr-small">
                                                             {guest.name}
                                                         </span>
                                                         <input type="checkbox"
                                                                name={`invitation_accepted-${guest.id}`}
-                                                               value="1"
-                                                               checked={guest.invitation_accepted == 1}
+                                                               defaultChecked={guest.invitation_accepted == 1}
                                                                onChange={() => {
-                                                                   guest.invitation_accepted = guest.invitation_accepted ? 0 : 1;
+                                                                   guest.invitation_accepted = guest.invitation_accepted == 1 ? 0 : 1;
+                                                                   updateGuest(guest);
                                                                }}
                                                         />
                                                     </label>
@@ -97,6 +109,10 @@ export const GuestForm = () => {
                                                               className="form-control"
                                                               placeholder="Write us something"
                                                               defaultValue={guest.message ?? ''}
+                                                              onChange={(value) => {
+                                                                  guest.message = value.target.value;
+                                                                  updateGuest(guest);
+                                                              }}
                                                     />
                                                 </div>
                                             </div>
