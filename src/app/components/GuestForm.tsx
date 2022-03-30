@@ -1,29 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Guest } from '../../types/entity/Guest';
 import { fetchGuests } from "../../store/guests/epics";
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from "../../types/applicationState";
 import { useNavigate, useParams } from "react-router-dom";
 import './GuestForm.css';
+import { Api } from "../api";
 
-interface  GuestFormProps {
-    guests?: Guest[]
-}
-
-export const GuestForm = (props: GuestFormProps) => {
+export const GuestForm = () => {
     const [isSending, setIsSending] = useState(true);
+    const [guests, setGuests] = useState<Guest[]>([]);
+    const guestState = useSelector((state: ApplicationState) => state.guestState);
     const { code } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const guestState = useSelector((state: ApplicationState) => state.guestState);
 
     useEffect(() => {
         if (!isSending) {
             return;
         }
 
-        const queryParams = new URLSearchParams(window.location.search);
-        const code = queryParams.get("code");
         if(code && guestState.data.length === 0) {
             dispatch(fetchGuests(code));
         }
@@ -32,10 +28,25 @@ export const GuestForm = (props: GuestFormProps) => {
     }, [isSending, code]);
 
     useEffect(() => {
-        if (!isSending && !guestState.isFetching && guestState.data.length === 0) {
+        if (!isSending && guestState.error) {
             navigate("/");
         }
+        if (!guestState.isFetching && !guestState.error) {
+            setGuests(guestState.data);
+        }
     }, [guestState, isSending]);
+
+    const onSubmit = () => {
+        console.log("SUBMIT!");
+        Api.updateGuests("testCode", guests)
+            .then((result) => {
+                alert("Updated");
+                setGuests(result);
+            })
+            .catch(() => {
+                alert("Error");
+            });
+    };
 
     return (
         <>
@@ -47,9 +58,6 @@ export const GuestForm = (props: GuestFormProps) => {
                             <div className="display-t">
                                 <div className="display-tc animate-box" data-animate-effect="fadeIn">
                                     <h1>Thanks for your attendance!</h1>
-                                    <h2>Free HTML5 templates Made by <a href="http://freehtml5.co"
-                                                                        rel="noreferrer"
-                                                                        target="_blank">FreeHTML5.co</a></h2>
                                 </div>
                             </div>
                         </div>
@@ -57,67 +65,55 @@ export const GuestForm = (props: GuestFormProps) => {
                 </div>
             </header>
 
-            <div className="fh5co-section">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12 animate-box">
-                            <h3>Get In Touch</h3>
-                            <form action="#">
-                                {!guestState.isFetching && !guestState.error && guestState.data.map((guest, index) => (
-                                    <div className="row form-group" key={index}>
-                                        <div className="col-md-12">
-                                            <label htmlFor="fname">First Name</label>
-                                            <input type="text" id="fname" className="form-control"
-                                                   placeholder={guest.name} />
+            {guests && (
+                <div className="fh5co-section">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-12 animate-box">
+                                <form action="#" onSubmit={onSubmit}>
+                                    {guests.map((guest, index) => (
+                                        <div key={index}>
+                                            <div className="row form-group">
+                                                <div className="col-md-12">
+                                                    <label>
+                                                        <span className="mr-small">
+                                                            {guest.name}
+                                                        </span>
+                                                        <input type="checkbox"
+                                                               name={`invitation_accepted-${guest.id}`}
+                                                               value="1"
+                                                               checked={guest.invitation_accepted == 1}
+                                                               onChange={() => {
+                                                                   guest.invitation_accepted = guest.invitation_accepted ? 0 : 1;
+                                                               }}
+                                                        />
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div className="row form-group">
+                                                <div className="col-md-12">
+                                                    <textarea name={`message-${guest.id}`}
+                                                              className="form-control"
+                                                              placeholder="Write us something"
+                                                              defaultValue={guest.message ?? ''}
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
-                                <div className="row form-group">
-                                    <div className="col-md-6">
-                                        <label htmlFor="fname">First Name</label>
-                                        <input type="text" id="fname" className="form-control"
-                                               placeholder="Your firstname" />
-                                    </div>
-                                    <div className="col-md-6">
-                                        <label htmlFor="lname">Last Name</label>
-                                        <input type="text" id="lname" className="form-control"
-                                               placeholder="Your lastname" />
-                                    </div>
-                                </div>
+                                    ))}
 
-                                <div className="row form-group">
-                                    <div className="col-md-12">
-                                        <label htmlFor="email">Email</label>
-                                        <input type="text" id="email" className="form-control"
-                                               placeholder="Your email address" />
+                                    <div className="form-group">
+                                        <input type="submit" value="Save" className="btn btn-primary" />
                                     </div>
-                                </div>
 
-                                <div className="row form-group">
-                                    <div className="col-md-12">
-                                        <label htmlFor="subject">Subject</label>
-                                        <input type="text" id="subject" className="form-control"
-                                               placeholder="Your subject of this message" />
-                                    </div>
-                                </div>
-
-                                <div className="row form-group">
-                                    <div className="col-md-12">
-                                        <label htmlFor="message">Message</label>
-                                        <textarea name="message" id="message"
-                                                  className="form-control" placeholder="Write us something" />
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <input type="submit" value="Send Message" className="btn btn-primary" />
-                                </div>
-
-                            </form>
+                                </form>
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
-            </div>
+            )}
         </>
     );
 };

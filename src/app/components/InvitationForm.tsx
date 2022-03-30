@@ -2,24 +2,26 @@ import React from 'react';
 import { Field, Form, Formik } from 'formik';
 import './InvitationForm.css';
 import { Guest } from '../../types/entity/Guest';
+import { BRIDE, GROOM } from '../../data/constants';
 import { Api } from "../api";
 import { onFetchGuestsSuccess } from "../../store/guests/epics";
 import { useNavigate } from "react-router-dom";
 
-interface InvitationFormProps {
-    onUpdate?: (rows: Guest[]) => void;
-}
-
-export const InvitationForm = (props: InvitationFormProps) => {
+export const InvitationForm = () => {
 
     const navigate = useNavigate();
 
     const onUpdate = (rows: Guest[]) => {
-        alert('Thanks for your attendance!');
         if(rows.length > 0) {
             onFetchGuestsSuccess(rows);
-            navigate("/invitation/"+ rows[0].invitation_code);
+            navigate("/inv/"+ rows[0].invitation_code);
+        } else {
+            onError();
         }
+    };
+
+    const onError = () => {
+        alert(`Your invitation code is probably not valid. Contact ${BRIDE} or ${GROOM}.`);
     };
 
     return (
@@ -43,7 +45,7 @@ export const InvitationForm = (props: InvitationFormProps) => {
                                             onUpdate(guests);
                                         })
                                         .catch(() => {
-                                            alert('Invitation code not found.');
+                                            onError();
                                         });
                                 }}
                             >
