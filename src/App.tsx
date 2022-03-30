@@ -20,7 +20,7 @@ function App() {
         <BrowserRouter>
             <div className="App">
                 <Routes>
-                    <Route path="/invitation/:code" element={<GuestForm/>} />
+                    <Route path="/inv/:code" element={<GuestForm/>} />
                     <Route path="/" element={<HomePage />} />
                 </Routes>
             </div>

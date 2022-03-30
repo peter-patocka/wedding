@@ -33,10 +33,11 @@ const onFetchGuestsError = (error: any): GuestsFetchErrorAction => ({
 
 export const fetchGuestsEpic: Epic<GuestsActionTypes, GuestsRequestAction, ApplicationState> = action$ => action$.pipe(
     ofType(REQUEST),
-    mergeMap((action: GuestsRequestAction) =>
-        Api.acceptInvitation(action.payload)
+    mergeMap((action: GuestsRequestAction) => {
+        return Api.acceptInvitation(action.payload)
             .then(data => onFetchGuestsSuccess(data))
             .catch(error => onFetchGuestsError(error))
+        }
     ),
 );
 
