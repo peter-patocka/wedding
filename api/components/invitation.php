@@ -4,10 +4,16 @@ $request=$_SERVER['REQUEST_METHOD'];
 $code = parseInput(get_invite_code());
 
 switch ( $request) {
-   	case 'POST':
     case 'GET':
-   		postAcceptInvitationJson($code);
-    break;
+   		acceptInvitationJson($code);
+   	    break;
+    case 'PUT':
+        $data=json_decode(file_get_contents('php://input'),true);
+        updateInvitation($code, $data);
+        break;
+    case 'PATCH':
+        getGuestsJson($code);
+        break;
 
    	default:
    		echo '{"name": "data not found"}';
@@ -20,7 +26,7 @@ function get_invite_code() {
     return isset($folders[1]) ? $folders[1] : '';// get code from  "inv/{code}"
 }
 
-function postAcceptInvitationJson($code){
+function acceptInvitationJson($code){
     $group_id = getGroupId($code);
     if($group_id < 0) {
         header("HTTP/1.0 404 Not Found");
@@ -36,6 +42,27 @@ function postAcceptInvitationJson($code){
        echo '{"result": "success", "num_rows_affected": "'.$rows_affected.'", "rows_affected": '.json_encode($guests).'}';
     }  else {
        echo '{"result": "error", "status": "mysql query error" ,"num_rows_affected": "'.$rows_affected.'"}';
+    }
+}
+function updateInvitation($code, $guests){
+    $group_id = getGroupId($code);
+    if($group_id < 0 || !$guests) {
+        header("HTTP/1.0 404 Not Found");
+        echo '{"result": "error", "status": "code not found"}';
+        return;
+    }
+
+    $rows_affected = 0;
+    foreach ($guests as $guest) {
+        $rows_affected += updateGuest($guest);
+    }
+
+    $guests = loadGuests($group_id);
+
+    if ($guests) {
+        echo '{"result": "success", "num_rows_affected": "'.$rows_affected.'", "rows_affected": '.json_encode($guests).'}';
+    }  else {
+        echo '{"result": "error", "status": "mysql query error" ,"num_rows_affected": "'.$rows_affected.'"}';
     }
 }
 function getGuestsJson($code){
@@ -63,11 +90,31 @@ function updateGroupInvitation($group_id) {
     mysqli_query($conn, $sql);
     return mysqli_affected_rows($conn);
 }
+function updateGuest($guest) {
+    global $conn;
+
+    $id = parseInput($guest["id"]);
+    $invitation_code = parseInput($guest["invitation_code"]);
+    $message = parseInput($guest["message"]);
+    $invitation_accepted = parseInput($guest["invitation_accepted"]);
+
+    if(!$id || !$invitation_code) {
+        return 0;
+    }
+
+    $sql = "UPDATE `wedding-table` ".
+        "SET invitation_accepted = '{$invitation_accepted}', 
+             message = '{$message}' ".
+        "WHERE id = '{$id}' AND invitation_code = '{$invitation_code}'";
+
+    mysqli_query($conn, $sql);
+    return mysqli_affected_rows($conn);
+}
 
 function getGroupId($code) {
     global $conn;
 
-    $sql = "SELECT group_id FROM `wedding-table` b WHERE UPPER(invitation_code) = UPPER('".$code."')";
+    $sql = "SELECT group_id FROM `wedding-table` b WHERE UPPER(invitation_code) = UPPER('".parseInput($code)."')";
 
     if (!($result = mysqli_query($conn, $sql))) {
         return -1;

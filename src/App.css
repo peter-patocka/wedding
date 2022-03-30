@@ -12,3 +12,6 @@
 .mr-small {
   margin-right: 10px;
 }
+.cursor {
+  cursor: pointer;
+}
