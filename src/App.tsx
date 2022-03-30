@@ -17,7 +17,7 @@ function App() {
     }, [guestsState]);
 
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={'/wedding'}>
             <div className="App">
                 <Routes>
                     <Route path="/inv/:code" element={<GuestForm/>} />
