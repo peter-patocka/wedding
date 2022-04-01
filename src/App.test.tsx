@@ -22,17 +22,6 @@ describe('App', () => {
         global.fetch = unmockedFetch;
     });
 
-    test.skip('display guests list', () => {
-        // given
-        jest.spyOn(URLSearchParams.prototype, "get").mockReturnValue("1");
-
-        // when
-        const { getAllByText } = render(<App />);
-
-        // then
-        expect(getAllByText(new RegExp("Guests list")).length).toBeGreaterThan(0);
-    });
-
     test.skip('display Groom and Bride name', () => {
         // given
         jest.spyOn(URLSearchParams.prototype, "get").mockReturnValue("1");
