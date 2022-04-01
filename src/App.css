@@ -15,3 +15,53 @@
 .cursor {
   cursor: pointer;
 }
+.fh5co-nav-toggle {
+  display: none !important;
+}
+
+@media screen and (max-width: 600px) {
+  .simply-countdown > .simply-section {
+    display: block !important;
+    margin-bottom: 1em !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+
+    background: rgba(241, 78, 149, 0.3);
+    height: 50px;
+    width: 80px;
+  }
+  .simply-countdown > .simply-section .simply-amount {
+    font-size: 15px;
+  }
+  .simply-countdown > .simply-section .simply-word {
+    font-size: 10px;
+  }
+  .simply-countdown > .simply-section > div {
+    height: 50px;
+    width: 80px;
+  }
+}
+
+@media (max-width: 500px) {
+  .header #fh5co-header {
+    background-position-x: 300px;
+  }
+}
+
+@media (max-width: 450px) {
+  .header #fh5co-header {
+    background-position-x: 450px;
+  }
+}
+
+@media (max-width: 400px) {
+  .header #fh5co-header {
+    background-position-x: 500px;
+  }
+}
+
+@media (max-width: 350px) {
+  .header #fh5co-header {
+    background-position-x: 550px;
+  }
+}
