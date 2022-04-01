@@ -3,7 +3,7 @@ import { Guest } from "../types/entity/Guest";
 export class Api {
 
     static async acceptInvitation(code: string, onSuccess: (rows: Guest[]) => void = (() => undefined)): Promise<Guest[]> {
-        return await fetch(process.env.PUBLIC_URL + "/api/invitation/"+code, {
+        return await fetch(this.getBaseUrl() + "/api/invitation/"+code, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
@@ -22,7 +22,7 @@ export class Api {
         });
     }
     static async updateGuests(code: string, guests: Guest[], onSuccess: (rows: Guest[]) => void = (() => undefined)): Promise<Guest[]> {
-        return await fetch(process.env.PUBLIC_URL + "/api/invitation/"+code, {
+        return await fetch(this.getBaseUrl() + "/api/invitation/"+code, {
             method: 'PUT',
             body: JSON.stringify(guests),
             headers: {
@@ -41,6 +41,11 @@ export class Api {
                 }
                 return Promise.reject();
             });
+    }
+    static getBaseUrl() {
+        return process.env.NODE_ENV === 'production'
+            ? process.env.PUBLIC_URL
+            : '';
     }
 }
 
