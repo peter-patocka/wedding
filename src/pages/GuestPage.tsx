@@ -1,13 +1,14 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import { Guest } from '../../types/entity/Guest';
-import { fetchGuests } from "../../store/guests/epics";
+import { Guest } from '../types/entity/Guest';
+import { fetchGuests } from "../store/guests/epics";
 import { useDispatch, useSelector } from 'react-redux';
-import { ApplicationState } from "../../types/applicationState";
+import { ApplicationState } from "../types/applicationState";
 import { useNavigate, useParams } from "react-router-dom";
-import './GuestForm.css';
-import { Api } from "../api";
+import './GuestPage.css';
+import { Api } from "../app/api";
+import { EventDateTime } from "../app/components/EventDateTime";
 
-export const GuestForm = () => {
+export const GuestPage = () => {
     const [isSending, setIsSending] = useState(true);
     const [guests, setGuests] = useState<Guest[]>([]);
     const guestState = useSelector((state: ApplicationState) => state.guestState);
@@ -69,7 +70,8 @@ export const GuestForm = () => {
                         <div className="col-md-8 col-md-offset-2 text-center">
                             <div className="display-t">
                                 <div className="display-tc animate-box" data-animate-effect="fadeIn">
-                                    <h1>Thanks for your attendance!</h1>
+                                    <h1>Tešíme sa na vašu účasť!</h1>
+                                    <EventDateTime />
                                 </div>
                             </div>
                         </div>
@@ -80,6 +82,9 @@ export const GuestForm = () => {
             {guests && (
                 <div className="fh5co-section">
                     <div className="container">
+                        <h4>
+                            V následujúcom formulári môžete upraviť zoznam hostí a pridať poznámky.
+                        </h4>
                         <div className="row">
                             <div className="col-md-12 animate-box">
                                 <form action="#" onSubmit={onSubmit}>
@@ -107,7 +112,7 @@ export const GuestForm = () => {
                                                 <div className="col-md-12">
                                                     <textarea name={`message-${guest.id}`}
                                                               className="form-control"
-                                                              placeholder="Write us something"
+                                                              placeholder="Sem napíšte, keď nam niečo chcete odkázať"
                                                               defaultValue={guest.message ?? ''}
                                                               onChange={(value) => {
                                                                   guest.message = value.target.value;
@@ -120,7 +125,7 @@ export const GuestForm = () => {
                                     ))}
 
                                     <div className="form-group">
-                                        <input type="submit" value="Save" className="btn btn-primary" />
+                                        <input type="submit" value="Uložiť" className="btn btn-primary" />
                                     </div>
 
                                 </form>
