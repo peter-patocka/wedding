@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { GuestForm } from "./app/components/GuestForm";
+import { GuestPage } from "./pages/GuestPage";
 import { HomePage } from "./pages/HomePage";
 
 import main from './main';
@@ -20,7 +20,7 @@ function App() {
         <BrowserRouter basename={'/wedding'}>
             <div className="App">
                 <Routes>
-                    <Route path="/inv/:code" element={<GuestForm/>} />
+                    <Route path="/inv/:code" element={<GuestPage/>} />
                     <Route path="/" element={<HomePage />} />
                 </Routes>
             </div>
