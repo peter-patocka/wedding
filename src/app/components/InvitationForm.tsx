@@ -31,8 +31,8 @@ export const InvitationForm = () => {
                 <div className="container">
                     <div className="row animate-box">
                         <div className="col-md-8 col-md-offset-2 text-center fh5co-heading">
-                            <h2>Are You Attending?</h2>
-                            <p>Please Fill-up the form to notify you that you&apos;re attending. Thanks.</p>
+                            <h2>Dostali ste pozvánku?</h2>
+                            <p>Vyplňte následujúci formulár:</p>
                         </div>
                     </div>
                     <div className="row animate-box">
@@ -53,11 +53,11 @@ export const InvitationForm = () => {
                                     <div className="col-md-4 col-sm-4">
                                         <div className="form-group">
                                             <label htmlFor="code" className="sr-only">Name</label>
-                                            <Field type="text" name="code" className="form-control" placeholder="Invitation code" />
+                                            <Field type="text" name="code" className="form-control" placeholder="Kód pozvánky" />
                                         </div>
                                     </div>
                                     <div className="col-md-4 col-sm-4">
-                                        <button type="submit" className="btn btn-default btn-block">I am Attending</button>
+                                        <button type="submit" className="btn btn-default btn-block">Odoslať</button>
                                     </div>
                                 </Form>
                             </Formik>
