@@ -85,7 +85,7 @@ function updateGroupInvitation($group_id) {
 
     $sql = "UPDATE `wedding-table` ".
         "SET invitation_accepted = 1, visited = 1 ".
-        "WHERE visited = 0 AND group_id = ".$group_id;
+        "WHERE visited = 0 AND deleted = 0 AND group_id = ".$group_id;
 
     mysqli_query($conn, $sql);
     return mysqli_affected_rows($conn);
@@ -131,7 +131,7 @@ function getGroupId($code) {
 function loadGuests($group_id){
     global $conn;
 
-    $sql = "SELECT distinct a.* FROM `wedding-table` a WHERE a.group_id = ".$group_id;
+    $sql = "SELECT distinct a.* FROM `wedding-table` a WHERE a.deleted = 0 AND a.group_id = ".$group_id;
 
     $rows = array();
     if ($result = mysqli_query($conn, $sql)) {
