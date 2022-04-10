@@ -5,8 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from "../types/applicationState";
 import { useNavigate, useParams } from "react-router-dom";
 import './GuestPage.css';
+import main from '../main';
 import { Api } from "../app/api";
 import { EventDateTime } from "../app/components/EventDateTime";
+import { WeddingTables } from "../app/components/WeddingTables";
+import { GuestsForm } from "../app/components/GuestsForm";
 
 export const GuestPage = () => {
     const [isSending, setIsSending] = useState(true);
@@ -29,15 +32,16 @@ export const GuestPage = () => {
     }, [isSending, code]);
 
     useEffect(() => {
-        if (!isSending && guestState.error) {
+        if (!isSending && !guestState.isFetching && guestState.data.length == 0) {
             navigate("/");
         }
         if (!guestState.isFetching && !guestState.error) {
             setGuests(guestState.data);
+            setTimeout(() => main(), 1);
         }
     }, [guestState, isSending]);
 
-    const updateGuest = (guest: Guest) => {
+    const updateGuest = (guest: Guest): void => {
         const index = guests.findIndex(item => item.id === guest.id);
         if(index >= 0 && index < guests.length) {
             guests[index] = guest;
@@ -45,13 +49,13 @@ export const GuestPage = () => {
         }
     };
 
-    const onSubmit = (event: FormEvent) => {
+    const onSubmit = (event: FormEvent): void => {
         event.preventDefault();
         if(guests.length > 0) {
             const code = guests[0].invitation_code;
             Api.updateGuests(code, guests)
                 .then((result) => {
-                    alert("Updated");
+                    alert("Uložené");
                     setGuests(result);
                 })
                 .catch(() => {
@@ -61,10 +65,14 @@ export const GuestPage = () => {
 
     };
 
+    if(guests.length == 0) {
+        return <></>
+    }
+
     return (
         <>
             <header id="fh5co-header" className="fh5co-cover fh5co-cover-sm alt-bg" role="banner">
-                <div className="overlay"></div>
+                <div className="overlay" />
                 <div className="fh5co-container">
                     <div className="row">
                         <div className="col-md-8 col-md-offset-2 text-center">
@@ -79,62 +87,9 @@ export const GuestPage = () => {
                 </div>
             </header>
 
-            {guests && (
-                <div className="fh5co-section">
-                    <div className="container">
-                        <h4>
-                            V následujúcom formulári môžete upraviť zoznam hostí a pridať poznámky.
-                        </h4>
-                        <div className="row">
-                            <div className="col-md-12 animate-box">
-                                <form action="#" onSubmit={onSubmit}>
-                                    {guests.map((guest, index) => (
-                                        <div key={index}>
-                                            <div className="row form-group">
-                                                <div className="col-md-12">
-                                                    <label className="cursor">
-                                                        <span className="mr-small">
-                                                            {guest.name}
-                                                        </span>
-                                                        <input type="checkbox"
-                                                               name={`invitation_accepted-${guest.id}`}
-                                                               defaultChecked={guest.invitation_accepted == 1}
-                                                               onChange={() => {
-                                                                   guest.invitation_accepted = guest.invitation_accepted == 1 ? 0 : 1;
-                                                                   updateGuest(guest);
-                                                               }}
-                                                        />
-                                                    </label>
-                                                </div>
-                                            </div>
+            <GuestsForm guests={guests} onSubmit={onSubmit} updateGuest={updateGuest} />
 
-                                            <div className="row form-group">
-                                                <div className="col-md-12">
-                                                    <textarea name={`message-${guest.id}`}
-                                                              className="form-control"
-                                                              placeholder="Sem napíšte, keď nam niečo chcete odkázať"
-                                                              defaultValue={guest.message ?? ''}
-                                                              onChange={(value) => {
-                                                                  guest.message = value.target.value;
-                                                                  updateGuest(guest);
-                                                              }}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-
-                                    <div className="form-group">
-                                        <input type="submit" value="Uložiť" className="btn btn-primary" />
-                                    </div>
-
-                                </form>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            )}
+            <WeddingTables/>
         </>
     );
 };
