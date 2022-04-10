@@ -10,6 +10,7 @@ import { Api } from "../app/api";
 import { EventDateTime } from "../app/components/EventDateTime";
 import { WeddingTables } from "../app/components/WeddingTables";
 import { GuestsForm } from "../app/components/GuestsForm";
+import { Timeline } from "../app/components/Timeline";
 
 export const GuestPage = () => {
     const [isSending, setIsSending] = useState(true);
@@ -88,6 +89,8 @@ export const GuestPage = () => {
             </header>
 
             <GuestsForm guests={guests} onSubmit={onSubmit} updateGuest={updateGuest} />
+
+            <Timeline />
 
             <WeddingTables/>
         </>
