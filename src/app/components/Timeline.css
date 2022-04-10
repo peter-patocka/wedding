@@ -1,0 +1,21 @@
+.timeline > li {
+    min-height: 200px;
+}
+#timeline-10 {
+    background-image:url(../../assets/harmonia.jpg)
+}
+#timeline-11 {
+    background-image:url(../../assets/timeline/11.jpg)
+}
+#timeline-12 {
+    background-image:url(../../assets/timeline/12.jpg)
+}
+#timeline-13 {
+    background-image:url(../../assets/timeline/13.jpg)
+}
+#timeline-15 {
+    background-image:url(../../assets/timeline/10.jpg)
+}
+#timeline-21 {
+    background-image:url(../../assets/timeline/21.jpg)
+}
