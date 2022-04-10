@@ -21,6 +21,20 @@ export class Api {
             return Promise.reject();
         });
     }
+    static async getWeddingTables(): Promise<Guest[]> {
+        return await fetch(this.getBaseUrl() + "/api/wedding-tables", {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            },
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((guests: Guest[]) => {
+                return guests;
+            });
+    }
     static async updateGuests(code: string, guests: Guest[], onSuccess: (rows: Guest[]) => void = (() => undefined)): Promise<Guest[]> {
         return await fetch(this.getBaseUrl() + "/api/invitation/"+code, {
             method: 'PUT',

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import tablesJson from '../../data/guestsList.json';
 import './WeddingTables.css';
-import {BRIDE, ENABLE_STATIC_GUESTS_LIST, GROOM} from '../../data/constants';
+import { BRIDE, ENABLE_STATIC_GUESTS_LIST, GROOM } from '../../data/constants';
 import css from 'classnames';
 import { Guest } from '../../types/entity/Guest';
+import { Api } from "../api";
 
 interface Tables {
     tables: Table[]
@@ -19,9 +20,13 @@ export const WeddingTables = () => {
         );
     }
 
-    let tables: Table[] = ENABLE_STATIC_GUESTS_LIST ? getDataFromJson() : [];
+    const getDataFromJson = (): Table[] => {
+        const tablesFile: Tables = JSON.parse(JSON.stringify(tablesJson));
+        return tablesFile.tables;
+    }
 
-    const [response, loading, hasError] = useFetch<Guest[] | undefined>("/api/wedding-tables");
+    const [isSending, setIsSending] = useState(true);
+    const [tables, setTables] = useState<Table[]>(ENABLE_STATIC_GUESTS_LIST ? getDataFromJson() : []);
 
     const getTotalGuests = (): number => {
         if(tables.length === 0) {
@@ -42,8 +47,28 @@ export const WeddingTables = () => {
         return Array.from(map, ([_index, table]) => table);
     }
 
-    if(!hasError && !loading && response) {
-        tables = transformWeddingTableResponse(response);
+    useEffect(() => {
+        if (!isSending) {
+            return;
+        }
+
+        Api.getWeddingTables()
+            .then(guests => {
+                setTables(transformWeddingTableResponse(guests));
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        setIsSending(false);
+    }, [isSending]);
+
+    const isGroomOrBride = (guest: TableGuest): boolean => {
+        return guest == GROOM || guest == BRIDE;
+    }
+
+    if (!tables) {
+        return <></>
     }
 
     return (
@@ -57,7 +82,7 @@ export const WeddingTables = () => {
                         <h4>({guests.length} people)</h4>
                         <ul>
                             {guests.map(guest => (
-                                <li key={guest} className={css({ "bold": guest == GROOM || guest == BRIDE})}>{guest}</li>
+                                <li key={guest} className={css({ "bold": isGroomOrBride(guest)})}>{guest}</li>
                             ))}
                         </ul>
                     </div>
@@ -66,39 +91,3 @@ export const WeddingTables = () => {
         </div>
     );
 };
-
-function getDataFromJson(): Table[] {
-    const tablesFile: Tables = JSON.parse(JSON.stringify(tablesJson));
-    return tablesFile.tables;
-}
-
-function useFetch<T>(url: string, init?: RequestInit): [T | undefined, boolean, boolean] {
-
-    const [response, setResponse] = useState<T>();
-    const [loading, setLoading] = useState(false);
-    const [hasError, setHasError] = useState(false);
-
-    useEffect(() => {
-        setLoading(true);
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json'
-            },
-            ...init,
-        })
-            .then((response) => {
-                return response.json();
-            })
-            .then((json) => {
-                setResponse(json);
-                setLoading(false);
-            })
-            .catch(() => {
-                setHasError(true);
-                setLoading(false);
-                setResponse(undefined);
-            })
-    }, [ url ]);
-    return [ response, loading, hasError ]
-}
