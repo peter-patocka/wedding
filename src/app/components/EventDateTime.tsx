@@ -24,6 +24,9 @@ export const EventDateTime = () => {
                     >
                         <Icons.DirectionsBoat /> <span className="text">Loď Harmónia</span>
                     </a> na rieke Dunaj
+                    <p>
+                        <a href="https://www.google.com/maps/search/Fajnorovo+n%C3%A1bre%C5%BEie+2,+811+02+Bratislava,+Slovensk%C3%A1+republika?entry=gmail&amp;source=g" target="_blank" rel="noreferrer">Fajnorovo nábrežie 2, Bratislava</a>
+                    </p>
                 </div>
             </h2>
         </>
