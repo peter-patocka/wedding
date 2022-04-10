@@ -13,7 +13,7 @@ export const GuestsForm = (props: GuestsFormProps) => {
     const { guests, onSubmit, updateGuest } = props;
 
     return (
-        <div className="fh5co-section">
+        <div className="fh5co-section fh5co-section-gray">
             <div className="container">
                 <h4>
                     V následujúcom formulári môžete upraviť zoznam hostí a pridať poznámky.
