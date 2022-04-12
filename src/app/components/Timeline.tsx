@@ -13,14 +13,14 @@ const boxes: TimelineBox[] = [
         id: 'timeline-10',
         title: 'Otvorenie móla',
         time: '10:00',
-        description: 'Vstup na ľoď je možný od 10:00. V lodnom bufete bude možné sa ponúknuť kávou a nápojmi.'
+        description: 'Vstup na loď je možný od 10:00. V lodnom bufete sa bude možné ponúknuť kávou a nápojmi.'
     },
     {
         id: 'timeline-11',
         title: 'Obrad',
         time: '11:00',
         description: 'Obrad sa bude konať na hornej palube. ' +
-            'Pre prípad nepriaznivého počasie si nezabudnite doniesť pršiplášťe alebo dáždnik 😎.'
+            'Pre prípad nepriaznivého počasia si nezabudnite doniesť pršiplášte, alebo dáždniky 😎.'
     },
     {
         id: 'timeline-12',
@@ -54,9 +54,9 @@ const boxes: TimelineBox[] = [
         id: 'timeline-21',
         title: 'Ukončenie akcie',
         time: '21:00',
-        description: 'Ľoď máme prenajatú do 22:00.'
+        description: 'Loď máme prenajatú do 22:00.'
     }
-]
+];
 
 export const Timeline = () => {
     return (
