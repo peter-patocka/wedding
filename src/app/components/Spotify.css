@@ -1,0 +1,12 @@
+.spotify-section {
+    padding-top: 0;
+}
+.spotify-frame {
+    border-radius: 12px;
+}
+.spotify-icon {
+    margin: 0 0 2em 0;
+}
+.spotify-icon img {
+    width: 250px;
+}

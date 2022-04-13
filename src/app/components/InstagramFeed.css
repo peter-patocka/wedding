@@ -1,0 +1,17 @@
+.instagram-section {
+    padding-top: 0;
+}
+.instagram-icon {
+    margin: 0 0 2em 0;
+}
+.instagram-icon img {
+    width: 200px;
+}
+.hashtag a {
+    font-size: 4em;
+}
+@media(max-width: 1000px) {
+    .hashtag a {
+        font-size: 2em;
+    }
+}

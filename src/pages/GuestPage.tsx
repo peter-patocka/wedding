@@ -11,6 +11,8 @@ import { EventDateTime } from "../app/components/EventDateTime";
 import { WeddingTables } from "../app/components/WeddingTables";
 import { GuestsForm } from "../app/components/GuestsForm";
 import { Timeline } from "../app/components/Timeline";
+import { InstagramFeed } from "../app/components/InstagramFeed";
+import { Spotify } from "../app/components/Spotify";
 
 export const GuestPage = () => {
     const [isSending, setIsSending] = useState(true);
@@ -93,6 +95,10 @@ export const GuestPage = () => {
             <Timeline />
 
             <WeddingTables/>
+
+            <InstagramFeed />
+
+            <Spotify />
         </>
     );
 };
