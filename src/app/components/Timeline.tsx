@@ -12,8 +12,8 @@ const boxes: TimelineBox[] = [
     {
         id: 'timeline-10',
         title: 'Otvorenie móla',
-        time: '10:00',
-        description: 'Vstup na loď je možný od 10:00. V lodnom bufete sa bude možné ponúknuť kávou a nápojmi.'
+        time: '10:30',
+        description: 'Vstup na loď je možný od 10:30. Na hornej palube sa bude možné ponúknuť pagáčikom, kávou a nápojmi.'
     },
     {
         id: 'timeline-11',
@@ -41,20 +41,26 @@ const boxes: TimelineBox[] = [
     {
         id: 'timeline-16',
         title: 'Voľný program',
-        time: '16:00',
+        time: '15:30',
         description: 'K dispozícií bude pokrový stôl, workshop maľovania, animátorka pre deti a samozrejme tanečná zábava v podpalubí.',
     },
     {
         id: 'timeline-18',
         title: 'Večera',
-        time: '18:00',
+        time: '17:30',
         description: 'Večera bude formou bufetových stolov.',
+    },
+    {
+        id: 'timeline-19',
+        title: 'Plavba',
+        time: '18:30',
+        description: 'Dvojhodinová plavba po Dunaji.',
     },
     {
         id: 'timeline-21',
         title: 'Ukončenie akcie',
-        time: '21:00',
-        description: 'Loď máme prenajatú do 22:00.'
+        time: '20:30',
+        description: 'Loď máme prenajatú do 20:30.'
     }
 ];
 
