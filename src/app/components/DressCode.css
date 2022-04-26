@@ -1,0 +1,9 @@
+#fh5co-couple-story.dresscode-component {
+    padding-top: 0;
+}
+.dresscode-component img {
+    max-width: 100%;
+}
+.dresscode, .dresscode li {
+    list-style: none;
+}
