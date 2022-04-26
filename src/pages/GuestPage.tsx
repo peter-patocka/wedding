@@ -13,6 +13,7 @@ import { GuestsForm } from "../app/components/GuestsForm";
 import { Timeline } from "../app/components/Timeline";
 import { InstagramFeed } from "../app/components/InstagramFeed";
 import { Spotify } from "../app/components/Spotify";
+import { DressCode } from "../app/components/DressCode";
 
 export const GuestPage = () => {
     const [isSending, setIsSending] = useState(true);
@@ -93,6 +94,8 @@ export const GuestPage = () => {
             <GuestsForm guests={guests} onSubmit={onSubmit} updateGuest={updateGuest} />
 
             <Timeline />
+
+            <DressCode />
 
             <WeddingTables/>
 
