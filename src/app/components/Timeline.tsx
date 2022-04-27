@@ -42,7 +42,7 @@ const boxes: TimelineBox[] = [
         id: 'timeline-16',
         title: 'Voľný program',
         time: '15:30',
-        description: 'K dispozícií bude pokrový stôl, workshop maľovania, animátorka pre deti a samozrejme tanečná zábava v podpalubí.',
+        description: 'Otvorenie baru na hornej palube. V obidvoch baroch začiatok podávania alkoholických nápojov aj nad 20%.<br><br>K dispozícií bude pokrový stôl, workshop maľovania, animátorka pre deti a samozrejme tanečná zábava v podpalubí.',
     },
     {
         id: 'timeline-18',
@@ -88,7 +88,7 @@ export const Timeline = () => {
                                         {box.description && (
                                             <div className="timeline-body">
                                                 <p>
-                                                    {box.description}
+                                                    <div dangerouslySetInnerHTML={{ __html: box.description }} />
                                                 </p>
                                             </div>
                                         )}
