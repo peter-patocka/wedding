@@ -15,7 +15,7 @@ switch ( $request) {
 function fetchGuests() {
     global $conn;
 
-    $sql = "SELECT * FROM `wedding-table` WHERE deleted = 0";
+    $sql = "SELECT * FROM `wedding-table` WHERE deleted = 0 AND invitation_accepted = 1";
 
     if ($result = mysqli_query($conn, $sql)) {
        $rows = array();
