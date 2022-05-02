@@ -65,7 +65,7 @@ export const WeddingTables = () => {
 
     const isGroomOrBride = (guest: TableGuest): boolean => {
         return guest == GROOM || guest == BRIDE;
-    }
+    };
 
     if (!tables) {
         return <></>
@@ -77,7 +77,7 @@ export const WeddingTables = () => {
             <h3>Total people: {getTotalGuests()}</h3>
             <div className="wedding-tables">
                 {tables.map((guests, index) => (
-                    <div className="wedding-table" key={index}>
+                    <div className={css("wedding-table", `wedding-table-${index}`)} key={index}>
                         <h3>Table {index + 1}</h3>
                         <h4>({guests.length} people)</h4>
                         <ul>
