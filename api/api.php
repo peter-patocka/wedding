@@ -10,9 +10,6 @@ header("Content-type: application/json; charset=utf-8");
 $fn = $_GET['fn'];
 
 switch(strtok($_GET['fn'], '/')) {
-    case 'learnhunter':
-        include "components/learnhunter.php";
-        break;
    case 'wedding-tables':
            include "components/wedding-tables.php";
            break;
