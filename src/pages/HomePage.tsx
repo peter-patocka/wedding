@@ -5,6 +5,7 @@ import harmonia from "../assets/harmonia.jpg";
 import { Map } from "../app/components/Map";
 import { PhotoGallery } from "../app/components/PhotoGallery";
 import { Countdown } from "../app/components/Countdown";
+import { WeddingFunction } from "../app/components/WeddingFunction";
 
 export const HomePage = () => {
     return (
@@ -12,6 +13,7 @@ export const HomePage = () => {
             <Header/>
             <Countdown />
             <InvitationForm/>
+            <WeddingFunction />
             <img src={harmonia} alt="Eventová loď Harmónia" className="full-size"/>
             <Map/>
             <PhotoGallery/>
