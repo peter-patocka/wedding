@@ -1,0 +1,23 @@
+
+.wedding-function-component {
+    clear: both;
+    text-align: left;
+    padding: 5em 0 2em;
+}
+
+.wedding-function-component .code-block,
+.wedding-function-component code {
+    display: block;
+    background-color: transparent;
+}
+
+.fsthjF > span {
+    display: block !important;
+}
+
+.github-logo {
+    display: inline-block;
+    background: transparent url(../../assets/github-logo.png) left center / 20px no-repeat;
+    color: #0b0b0b !important;
+    padding-left: 23px;
+}
