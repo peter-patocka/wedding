@@ -65,3 +65,38 @@ Your app is ready to be deployed!
 2. setup database connection in file `/api/db.php`
 3. copy `build/` content to document root
 4. copy `/api/` content to `/api/` folder
+
+## Happily Ever After
+
+```java
+/**
+ * Execute wedding day. The bride and the groom will live together, as a married couple.
+ *
+ * Wedding day: 📅 10. 6. 2022, 11:00
+ * Location: ⛴ Loď Harmónia, Fajnorovo nábrežie 2, Bratislava
+ *
+ * @see <a href="http://patocka.sk/wedding/">Wedding page</a>
+ */
+public void wedding() {
+    if (acceptWedding(groom) && acceptWedding(bride)) {
+        groom.setMarried(bride);
+        bride.setMarried(groom);
+
+        try {
+            liveHappilyEverAfter(bride, groom);
+        } catch (PersonDiedException personDiedException) {
+            Person personWhoDied = personDiedException.getPerson();
+
+            throwStuffToBin(personWhoDied);
+
+            if (personWhoDied == groom || personWhoDied == bride) {
+                groom.setMarried(null);
+                bride.setMarried(null);
+            }
+        }
+    } else {
+        new Thread(() -> doSomething(bride)).start();
+        new Thread(() -> doSomething(groom)).start();
+    }
+}
+```
